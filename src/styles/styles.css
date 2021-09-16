@@ -1,498 +1,591 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-html, body {
-    padding: 0px;
-    margin: 0px;
-    font-family: 'Poppins';
-    scrollbar-color: rgba(0, 0, 0, 0.6) rgba(17, 25, 40, 0.75);
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	padding: 0px;
+	margin: 0px;
+	font-family: 'Poppins';
+	scrollbar-color: rgba(0, 0, 0, 0.6) rgba(17, 25, 40, 0.75);
+	background: linear-gradient(90deg, rgba(70, 114, 176, 1) 0%, rgba(68, 167, 174, 1) 100%);
+}
+
+.container {
+	max-width: 95%;
+	margin: auto;
+	/* margin: 10px 15px !important; */
 }
 
 a:link {
-    text-decoration: inherit;
-    color: inherit;
-    cursor: default;
+	text-decoration: inherit;
+	color: inherit;
+	cursor: default;
 }
 
 a:visited {
-    text-decoration: inherit;
-    color: inherit;
-    cursor: default;
+	text-decoration: inherit;
+	color: inherit;
+	cursor: default;
+}
+
+.app {
+	max-width: 100%;
 }
 
 /* NAVBAR */
 
 .navbar {
-    overflow: hidden;
-    width: 100%;
-    height: 3.3em;
-    position: fixed;
-    top: 0;
-    background-color: #111928e6;
-    backdrop-filter: blur(14px) saturate(180%);
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    display: grid;
-    grid-template-areas: 'logo links login';
-    grid-template-columns: 20vw auto 20vw;
-    align-items: center;
-    z-index: 999;
+	width: 100vw;
+	line-height: 3.3em;
+	position: fixed;
+	top: 0;
+	background-color: #111928e6;
+	backdrop-filter: blur(14px) saturate(180%);
+	-webkit-backdrop-filter: blur(14px) saturate(180%);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+	z-index: 999;
+
+	padding: 0 50px !important;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+/* Need to fix: break down all the styles into component-based css files */
+
+@media screen and (max-width: 760px) {
+	.navbar {
+		flex-direction: column;
+		padding: 20px 30px !important;
+		align-items: flex-start;
+	}
+
+	.navLinks {
+		margin: 10px 0;
+	}
+
+	.navLinks_link:nth-of-type(2) {
+		margin: 0 10px;
+	}
+
+	.container {
+		margin-top: 140px !important;
+	}
+
+	.documentationContainer {
+		padding-top: 230px !important;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.navbar {
+		display: block;
+		position: static;
+	}
+
+	.navLinks {
+		flex-direction: column;
+	}
+
+	.navLinks_link:nth-of-type(2) {
+		margin: 10px 0 !important;
+	}
+
+	.documentationContainer {
+		padding-top: 20px !important;
+	}
+
+	.container,
+	.documentationContainer {
+		margin-top: 0px !important;
+	}
+
+	.userInfo {
+		margin-top: 20px !important;
+	}
+}
+
+@media screen and (min-width: 451px) {
+	.homeContent {
+		overflow-y: auto;
+	}
 }
 
 .logoNavbar {
-    height: 2.5em;
-    margin: auto;
-    grid-area: logo;
-    display: flex;
-    align-content: center;
+	height: 2.5em;
 }
 
 .navLinks {
-    display: flex;
-    grid-area: links;
-    color: #eee;
-    font-family: 'Poppins';
-    flex-flow: row wrap;  justify-content: space-around;
-    width: 50%;
-    margin: auto;
-    position: relative;
-    font-weight: 500;
+	display: flex;
+	color: #eee;
+	font-family: 'Poppins';
+	position: relative;
+	font-weight: 500;
 }
 
 .navLinks_link {
-    padding: 6px 15px;
-    border-radius: 20px;
-    cursor: default;
-    transition: 0.2s ease-out;
+	padding: 6px 15px;
+	border-radius: 20px;
+	cursor: default;
+	transition: 0.2s ease-out;
 }
 
 .navLinks_link:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-    transition: 0.2s ease-in;
+	background-color: rgba(0, 0, 0, 0.2);
+	transition: 0.2s ease-in;
 }
 
 .navLinks_link.active {
-    background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 0.3);
 }
 
 .userInfo {
-    grid-area: login;
-    display: flex;
-    flex-flow: row wrap;  justify-content: flex-end;
-    position: relative;
-    margin-right: 10px;
-    cursor: default;
+	position: relative;
+	cursor: default;
 }
 
 .userBackground {
-    border-radius: 20px;
+	border-radius: 20px;
 }
 
 .userContent {
-    align-items: center;
-    display: flex;
-    border-radius: 20px;
+	align-items: center;
+	display: flex;
+	border-radius: 20px;
 }
 
 .userContent .userLogout {
-    width: 32px;
-    height: 32px;
-    background-color: #a23b3b99;
-    border: 0px;
-    border-radius: 50%;
-    align-items: center;
-    color: #fff;
-    margin-left: 5px;
-    padding: 0px 1px 0px 0px;
-    transition: 0.1s ease-out;
+	width: 32px;
+	height: 32px;
+	background-color: #a23b3b99;
+	border: 0px;
+	border-radius: 50%;
+	align-items: center;
+	color: #fff;
+	margin-left: 5px;
+	padding: 0px 1px 0px 0px;
+	transition: 0.1s ease-out;
 }
 
 .userContent .userLogout:hover {
-    background-color: #a23b3bbd;
-    transition: 0.1s ease-in;
+	background-color: #a23b3bbd;
+	transition: 0.1s ease-in;
 }
 
-.userContent .userLogout i{
-    font-size: 1.65em;
-    text-align: center;
+.userContent .userLogout i {
+	font-size: 1.65em;
+	text-align: center;
 }
 
 .userInfo_name {
-    color: #fff;
-    font-family: 'Poppins';
-    align-self: center;
-    padding: 2px 8px 2px 8px;
-    font-weight: 300;
-    position: relative;
+	color: #fff;
+	font-family: 'Poppins';
+	align-self: center;
+	padding: 2px 8px 2px 8px;
+	font-weight: 300;
+	position: relative;
 }
 
 .userInfo_name #userPermissions {
-    content: '';
-    position: absolute;
-    width: 79%;
-    height: 2px;
-    border-radius: 10px;
-    bottom: 2px;
+	content: '';
+	position: absolute;
+	width: 79%;
+	height: 2px;
+	border-radius: 10px;
+	bottom: 2px;
 }
 
 .userInfo_image {
-    width: 2.2em;
-    border-radius: 50%;
-    margin: 0px;
-    padding: 4px;
+	width: 2.2em;
+	border-radius: 50%;
+	margin: 0px;
+	padding: 4px;
 }
 
 .profileDropdown {
-    height: 200px;
-    width: 30px;
-    position: absolute;
+	height: 200px;
+	width: 30px;
+	position: absolute;
 }
 
 .userLogin button {
-    border: 0px;
-    border-radius: 20px;
-    padding: 6px 15px;
-    transition: 0.1s ease-out;
+	font-size: 1rem;
+	border: 0px;
+	border-radius: 20px;
+	padding: 7px 18px;
+	transition: 0.1s ease-out;
+}
+
+.userLogin button img {
+	margin-right: 10px;
 }
 
 .userLogin button:hover {
-    background-color: #293d74 !important;
-    transition: 0.1s ease-in;
+	background-color: #293d74 !important;
+	transition: 0.1s ease-in;
 }
 
 /* HOME PAGE */
 
 .homeContent {
-    background: linear-gradient(90deg, rgba(70,114,176,1) 0%, rgba(68,167,174,1) 100%);
-    height: 100vh;
-    width: 100vw;
-    overflow-y: auto;
+	height: 100vh;
+	width: 100vw;
 }
 
 .appContext {
-    margin: auto;
-    text-align: center;
-    padding: 5em 0em 0em 0em;
-    color: #111;
-    cursor: default;
+	margin: auto;
+	text-align: center;
+	padding: 5em 0em 0em 0em;
+	color: #111;
+	cursor: default;
 }
 
 .appHeader {
-    font-weight: 800;
-    font-size: 3.8em;
-    width: 15em;
-    line-height: 1.2em;
-    margin: auto;
+	font-weight: 800;
+	font-size: 3.8em;
+	/* width: 15em; */
+	line-height: 1.2em;
+	margin: auto;
 }
 
 .appHeader .logoAppHeader {
-    width: 3.8em;
+	width: 3.8em;
 }
 
 .appText {
-    font-weight: 500;
-    font-size: 1.4em;
-    padding: 0em 0em 0em 0em;
-    color: #fff;
-    text-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
+	font-weight: 500;
+	font-size: 1.4em;
+	padding: 0em 0em 0em 0em;
+	color: #fff;
+	text-shadow: 0px 1px 4px rgb(0 0 0 / 20%);
 }
 
 .appImage {
-    margin: 18px auto auto auto;
-    position: relative;
+	margin: 18px auto auto auto;
+	position: relative;
 }
 
 .appImage object {
-    border-radius: 10px;
+	border-radius: 10px;
 }
 
 .appImage object.app {
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .appImage img.visualizer {
-    position: absolute;
-    top: 30em;
-    right: 13em;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+	position: absolute;
+	top: 30em;
+	right: 13em;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .appButtons {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    margin: 12px auto auto auto;
-    width: 62%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+	margin: 12px auto auto auto;
+	width: 62%;
 }
 
 .appButtons button {
-    font-family: 'Poppins';
-    font-weight: 500;
-    display: grid;
-    grid-template-areas: 
-    'icon text'
-    'icon file';
-    border: 0px;
-    height: 51px;
-    width: 180px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    border-radius: 10px;
-    fill: #ddd;
-    color: #ddd;
-    cursor: pointer;
-    transition: 0.1s ease-out;
+	font-family: 'Poppins';
+	font-weight: 500;
+	display: grid;
+	grid-template-areas:
+		'icon text'
+		'icon file';
+	border: 0px;
+	height: 51px;
+	width: 180px;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+	border-radius: 10px;
+	fill: #ddd;
+	color: #ddd;
+	cursor: pointer;
+	transition: 0.1s ease-out;
+	margin: 10px 10px;
 }
 
 .appButtons button:hover {
-    transform: scale(1.04);
-    transition: 0.1s ease-in;
+	transform: scale(1.04);
+	transition: 0.1s ease-in;
 }
 
 .appButtons button .icon {
-    grid-area: icon;
-    padding: 12px 0px;
+	grid-area: icon;
+	padding: 12px 0px;
 }
 .appButtons button .text {
-    grid-area: text;
-    margin: auto;
-    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+	grid-area: text;
+	margin: auto;
+	text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 }
 .appButtons button .file {
-    grid-area: file;
-    margin: -8px auto auto auto;
-    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+	grid-area: file;
+	margin: -8px auto auto auto;
+	text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .appButtons #downloadEXE {
-    background-color: rgb(51, 155, 106);
+	background-color: rgb(51, 155, 106);
 }
 
 .appButtons #downloadZIP {
-    background-color: rgb(209, 125, 47);
+	background-color: rgb(209, 125, 47);
 }
 
 .appButtons #discordServer {
-    background-color: #697EC4;
+	background-color: #697ec4;
 }
 
 .appButtons #githubRep {
-    background-color: #e0e1e2;
-    color: #222;
-    fill: #222
+	background-color: #e0e1e2;
+	color: #222;
+	fill: #222;
 }
-
 
 /* TOURNAMENTS PAGE */
 
 .tournamentsContainer {
-    background-color: rgba(17, 25, 40, 0.75);
-    padding: 4em 0em 2em 0em;
-    color: #fff;
-    font-family: 'Poppins';
-    text-align: center;
+	background-color: rgba(17, 25, 40, 0.75);
+	padding: 4em 0em 2em 0em;
+	color: #fff;
+	font-family: 'Poppins';
+	text-align: center;
 }
 
-.tournamentsContainer #header{
-    text-align: center;
-    font-weight: 700;
-    font-size: 3.8em;
+.tournamentsContainer #header {
+	text-align: center;
+	font-weight: 700;
+	font-size: 3.8em;
 }
-.tournamentsContainer #text{
-    text-align: center;
-    font-weight: 400;
-    font-size: 1.4em;
+.tournamentsContainer #text {
+	text-align: center;
+	font-weight: 400;
+	font-size: 1.4em;
 }
 
 .tournamentsList {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 .tournamentsListDivider {
-    content: '';
-    width: 54%;
-    position: relative;
-    height: 2px;
-    background-color: rgba(255, 255, 255, 0.1);
-    margin: 18px auto 0px auto;
-    border-radius: 10px;
+	content: '';
+	width: 54%;
+	position: relative;
+	height: 2px;
+	background-color: rgba(255, 255, 255, 0.1);
+	margin: 18px auto 0px auto;
+	border-radius: 10px;
 }
 
 .tournamentsList .entry {
-    display: grid;
-    grid-template-areas: 'acronym name status';
-    grid-template-columns: 7em auto 5.5em;
-    background-color: rgba(0, 0, 0, 0.14);
-    width: 50%;
-    border-radius: 15px;
-    margin: auto auto 5px auto;
-    font-size: 1.2em;
-    font-weight: 400;
-    align-content: center;
-    padding: 10px 0px;
-    transition: 0.12s ease-out;
-    cursor: pointer;
+	display: grid;
+	grid-template-areas: 'acronym name status';
+	grid-template-columns: 7em auto 5.5em;
+	background-color: rgba(0, 0, 0, 0.14);
+	width: 50%;
+	border-radius: 15px;
+	margin: auto auto 5px auto;
+	font-size: 1.2em;
+	font-weight: 400;
+	align-content: center;
+	padding: 10px 0px;
+	transition: 0.12s ease-out;
+	cursor: pointer;
 }
 
 .tournamentsList .entry:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-    transition: 0.12s ease-in;
+	background-color: rgba(0, 0, 0, 0.3);
+	transition: 0.12s ease-in;
 }
 
-.tournamentsList .entry .acronym{
-    padding-left: 1em;
-    padding-right: 12px;
-    grid-area: acronym;
-    text-align: left;
-    display: flex;
-    align-items: center;
+.tournamentsList .entry .acronym {
+	padding-left: 1em;
+	padding-right: 12px;
+	grid-area: acronym;
+	text-align: left;
+	display: flex;
+	align-items: center;
 }
 
-.tournamentsList .entry .name{
-    grid-area: name;
-    text-align: left;
-    position: relative;
-    padding-left: 12px;
-    display: flex;
-    flex-flow: column wrap;
+.tournamentsList .entry .name {
+	grid-area: name;
+	text-align: left;
+	position: relative;
+	padding-left: 12px;
+	display: flex;
+	flex-flow: column wrap;
 }
 
-.tournamentsList .entry .name::before{
-    content: '';
-    width: 2px;
-    border-radius: 10px;
-    left: 0px;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    position: absolute
+.tournamentsList .entry .name::before {
+	content: '';
+	width: 2px;
+	border-radius: 10px;
+	left: 0px;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.1);
+	position: absolute;
 }
 
-.tournamentsList .entry .name .request{
-    font-size: 0.7em;
-    font-weight: 300;
-    color: #ddd;
-    display: flex;
-    flex-flow: row wrap;
-    align-content: center;
+.tournamentsList .entry .name .request {
+	font-size: 0.7em;
+	font-weight: 300;
+	color: #ddd;
+	display: flex;
+	flex-flow: row wrap;
+	align-content: center;
 }
 
-.tournamentsList .entry .name .request .propic{
-    width: 20px;
-    border-radius: 50%;
-    margin-left: 4px;
-    background: center center / cover no-repeat;
+.tournamentsList .entry .name .request .propic {
+	width: 20px;
+	border-radius: 50%;
+	margin-left: 4px;
+	background: center center / cover no-repeat;
 }
 
-.tournamentsList .entry .name .request .username{
-    margin-left: 4px;
-    font-weight: 400;
-    color: #eee;
+.tournamentsList .entry .name .request .username {
+	margin-left: 4px;
+	font-weight: 400;
+	color: #eee;
 }
 
-.tournamentsList .entry .status{
-    grid-area: status;
-    text-align: right;
-    padding-right: 1em;
-    font-weight: 300;
-    font-size: 0.9em;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.tournamentsList .entry .status {
+	grid-area: status;
+	text-align: right;
+	padding-right: 1em;
+	font-weight: 300;
+	font-size: 0.9em;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
 
-.tournamentsList .entry .status span{
-    padding: 2px 10px;
-    border-radius: 15px;
+.tournamentsList .entry .status span {
+	padding: 2px 10px;
+	border-radius: 15px;
 }
 
-.tournamentsList .entry .status.Active span{
-    background-color: rgb(61 136 61)
+.tournamentsList .entry .status.Active span {
+	background-color: rgb(61 136 61);
 }
 
-.tournamentsList .entry .status.Ended span{
-    background-color: rgb(179 49 49);
+.tournamentsList .entry .status.Ended span {
+	background-color: rgb(179 49 49);
 }
 
-.tournamentsList .entry .status.Pending span{
-    background-color: rgb(230 140 37);
+.tournamentsList .entry .status.Pending span {
+	background-color: rgb(230 140 37);
 }
-
-
-
 
 /* DOCUMENTATION PAGE */
 
 .documentationContainer {
-    background-color: rgba(17, 25, 40, 0.75);
-    padding: 4em 0em 2em 0em;
-    color: #fff;
-    font-family: 'Poppins';
-    text-align: center;
+	font-size: 16px;
+	background-color: rgba(17, 25, 40, 0.75);
+	padding: 4em 0em 2em 0em;
+	color: #fff;
+	font-family: 'Poppins';
+	text-align: center;
 }
 
-.documentationContainer .divider {
-    content: '';
-    width: 72%;
-    position: relative;
-    height: 2px;
-    background-color: rgba(255, 255, 255, 0.2);
-    margin: 0px auto 8px auto;
-    border-radius: 10px;
+.documentationContainer > .divider {
+	content: '';
+	width: 72%;
+	position: relative;
+	height: 2px;
+	background-color: rgba(255, 255, 255, 0.2);
+	margin: 0px auto 8px auto;
+	border-radius: 10px;
 }
 
-.documentationContainer span#header {
-    text-align: center;
-    font-weight: 700;
-    font-size: 3.8em;
+.documentationContainer > span#header {
+	text-align: center;
+	font-weight: 700;
+	font-size: 3.8em;
 }
 
-.documentationContainer span.string {
-    font-weight: 700;
-    background-color: rgba(0,0,0,0.3);
-    padding: 1px 5px;
-    border-radius: 20px;
+.documentationContainer > span.string {
+	font-weight: 700;
+	background-color: rgba(0, 0, 0, 0.3);
+	padding: 1px 5px;
+	border-radius: 20px;
 }
 
-.documentationContainer span.string.link {
-    color: #70b7fd
+.documentationContainer > span.string.link {
+	color: #70b7fd;
 }
 
-.documentationContainer span.string.link span{
-    color: rgb(240, 217, 89);
+.documentationContainer > span.string.link span {
+	color: rgb(240, 217, 89);
 }
 
-.documentationContainer .installation, .documentationContainer .fields, .documentationContainer .obs {
-    width: 70%;
-    margin: auto;
-    text-align: left;
+.documentationContainer > .installation,
+.documentationContainer > .fields,
+.documentationContainer > .obs {
+	width: 70%;
+	margin: auto;
+	text-align: left;
 }
 
-.documentationContainer .installation a, .documentationContainer .fields a, .documentationContainer .obs a{
-    color: #70b7fd
+.documentationContainer > .installation a,
+.documentationContainer > .fields a,
+.documentationContainer > .obs a {
+	color: #70b7fd;
 }
 
-.documentationContainer h1, .documentationContainer h2{
-    margin: 0px 0px -15px 0px
+.documentationContainer > .obs img {
+	max-width: 100%;
 }
 
+.documentationContainer > * > h1,
+.documentationContainer > * > h2 {
+	margin: 10px 0 0 0;
+}
 
+#Displayer_Settings_section li ul li img {
+	max-width: 100%;
+}
+
+@media screen and (max-width: 530px) {
+	.documentationContainer > span#header {
+		font-size: 2em;
+	}
+
+	.documentationContainer > * > h1 {
+		font-size: 1.7em !important;
+	}
+
+	.documentationContainer > * > h2 {
+		font-size: 1.57em !important;
+	}
+}
 
 /* SCROLLBAR */
 
 ::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: rgba(17, 25, 40, 0.75);
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.8);
-  }
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: rgba(17, 25, 40, 0.75);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.6);
+	border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(0, 0, 0, 0.8);
+}
