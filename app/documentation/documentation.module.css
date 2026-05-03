@@ -1,0 +1,70 @@
+.pageContainer {
+  width: 60em;
+  margin: auto;
+  display: flex;
+  flex-flow: column;
+}
+
+.pageContainer h1 {
+  text-align: center;
+  margin: auto;
+  cursor: default;
+}
+
+.pageContainer img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.pageContainer .divider {
+  content: '';
+  width: 72%;
+  position: relative;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0px auto 8px auto;
+  border-radius: 10px;
+}
+
+.pageContainer span#header {
+  text-align: center;
+  font-weight: 700;
+  font-size: 3.8em;
+}
+
+.pageContainer span.string {
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1px 5px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.pageContainer span.string.link {
+  color: #70b7fd;
+}
+
+.pageContainer span.string.link span {
+  color: rgb(240, 217, 89);
+}
+
+.pageContainer .installation,
+.pageContainer .fields,
+.pageContainer .obs {
+  width: 100%;
+  margin: auto;
+  text-align: left;
+}
+
+.pageContainer .installation a,
+.pageContainer .fields a,
+.pageContainer .obs a {
+  color: #70b7fd;
+}
+
+/* Mobile and Tablet */
+/* @media (max-width: 1023px) {
+  .pageContainer img {
+    width: 80vw;
+  }
+} */

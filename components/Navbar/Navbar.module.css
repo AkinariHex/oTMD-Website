@@ -1,0 +1,134 @@
+.navbar {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: var(--navbar-height);
+  background: linear-gradient(
+    180deg,
+    hsl(219, 28%, 16%) 20%,
+    transparent 90%,
+    transparent
+  );
+  padding: 0 2em;
+  gap: 2em;
+  backdrop-filter: blur(2px);
+  z-index: 4;
+}
+
+.logo {
+  height: 60%;
+  aspect-ratio: 359/237;
+  position: relative;
+  user-select: none;
+}
+
+.navLinks {
+  color: var(--navbar-text-color);
+  display: flex;
+  gap: 30px;
+  margin: auto;
+  font-weight: 500;
+  list-style: none;
+  padding: 0;
+}
+
+.navLinks li {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.navLinks_link {
+  padding: 5px 4px;
+  border-radius: 20px;
+  cursor: pointer !important;
+  position: relative;
+  transition: 0.2s ease-in;
+}
+
+.navLinks_link.active::after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  border-radius: 50vh;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: var(--main-accent-color);
+  transition: 0.2s ease-in;
+}
+
+:is(.navLinks_link, .login)::after {
+  content: '';
+  width: 0%;
+  height: 2px;
+  border-radius: 50vh;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: var(--navbar-text-color);
+  transition: 0.2s ease-in;
+}
+
+.login,
+.logged {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  color: var(--navbar-text-color);
+  font-size: 12pt;
+  font-weight: 500;
+  margin: 0 0 0 auto;
+  position: relative;
+  padding: 5px 0 5px 4px;
+  cursor: pointer;
+}
+
+.login img {
+  filter: contrast(0) brightness(2);
+}
+
+.logged img {
+  border-radius: 50vh;
+}
+
+.burgerButton {
+  display: none;
+  margin: 0 0 0 auto;
+  cursor: pointer;
+}
+
+/* Enable hover only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .navLinks_link:hover::after {
+    background-color: var(--main-accent-color);
+    width: 100%;
+    transition: 0.2s ease-out;
+  }
+  .login:hover::after {
+    background-color: var(--main-accent-color);
+    width: 79%;
+    transition: 0.2s ease-out;
+  }
+}
+
+/* Mobile and Tablet */
+@media (max-width: 1023px) {
+  .navbar nav,
+  .login,
+  .logged {
+    display: none;
+  }
+
+  .navbar {
+    justify-content: center;
+  }
+
+  .burgerButton {
+    display: block;
+  }
+}

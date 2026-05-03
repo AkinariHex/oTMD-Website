@@ -1,0 +1,94 @@
+.mobileNavbar {
+  width: 100%;
+  height: calc(env(safe-area-inset-bottom) + 60px);
+  /* background-color: var(--mobile-navbar-color); */
+  background: linear-gradient(0deg, hsl(219, 28%, 16%) 20%, transparent);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  color: var(--navbar-text-color);
+  backdrop-filter: blur(2px);
+  z-index: 4;
+}
+
+.mobileNavbar.authenticated {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 0;
+  font-size: 8.5pt;
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+}
+
+.button.active {
+  color: var(--mobile-navbar-active-little-color);
+  transition: 0.2s all ease-out;
+  font-weight: 500;
+}
+
+.button > * {
+  z-index: 2;
+}
+
+.button svg {
+  height: 20px;
+}
+
+/* .button .selected {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: var(--mobile-navbar-active-background-color);
+  z-index: 1;
+} */
+
+/* .button .selected::before {
+  content: '';
+  height: 4px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: var(--mobile-navbar-active-little-color);
+} */
+
+.button .selected {
+  content: '';
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  bottom: calc(env(safe-area-inset-bottom) - 16px);
+  left: 0;
+  background-color: var(--mobile-navbar-active-little-color);
+}
+
+.navImage {
+  height: 100%;
+  aspect-ratio: 1;
+  position: relative;
+  border-radius: 50vh;
+  overflow: hidden;
+  top: -10px;
+  border: 2px solid var(--mobile-navbar-active-little-color);
+}
+
+.navImage img {
+  object-fit: contain;
+}
+
+@media (min-width: 1024px) {
+  .mobileNavbar {
+    display: none;
+  }
+}

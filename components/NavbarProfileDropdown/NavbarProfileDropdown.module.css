@@ -1,0 +1,50 @@
+.profileActions {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  top: calc(var(--navbar-height) - 20px);
+  right: 1px;
+  min-width: 9em;
+  width: max-content;
+  padding: 5px;
+  gap: 1px;
+  border-radius: 10px;
+  background-color: var(--navbar-profile-dropdown-color);
+  backdrop-filter: blur(2px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  z-index: 8;
+}
+
+.profileActions :is(a, div) {
+  display: flex;
+  flex-flow: row;
+  font-size: 10.6pt;
+  font-weight: 500;
+  color: var(--navbar-text-color);
+  padding: 4px 12px;
+  text-align: left;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0 10px;
+}
+
+.profileActions :is(a, div) svg {
+  width: 13px;
+  margin-top: 1px;
+}
+
+.profileActions :is(a, div):hover {
+  background-color: var(--navbar-profile-dropdown-item-color);
+}
+
+.profileActions :is(a, div):last-child {
+  color: var(--navbar-profile-dropdown-item-logout-text-color);
+}
+
+.profileActions :is(a, div):last-child:hover {
+  background-color: var(--navbar-profile-dropdown-item-logout-color);
+  color: var(--navbar-profile-dropdown-item-logout-text-color);
+}

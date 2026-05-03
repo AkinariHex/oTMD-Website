@@ -1,0 +1,26 @@
+.linksBar {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px;
+  gap: 5px 40px;
+}
+
+.linksBar div {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 0 6px;
+  font-size: 0.95em;
+  font-weight: 500;
+  transition: all 0.2s ease-out;
+}
+
+.linksBar div a {
+  transition: all 0.2s ease-out;
+}
+
+.linksBar div a:hover {
+  color: var(--main-accent-color);
+}

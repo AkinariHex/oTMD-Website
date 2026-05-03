@@ -1,0 +1,41 @@
+.pageContainer {
+  width: 60em;
+  margin: auto;
+  display: flex;
+  flex-flow: column;
+}
+
+.settingsContainer {
+  margin: 20px auto;
+  display: flex;
+  flex-flow: column;
+  width: 55em;
+  border-radius: 20px;
+  /* background-color: var(--action-div-color); */
+  background-color: var(--settings-container-color);
+  padding: 20px 30px;
+}
+
+.settingsContainer .title {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 20px;
+  background-color: var(--settings-container-background-color);
+  color: #eee;
+  font-size: 18pt;
+  font-weight: 500;
+}
+
+/* .settingsContainer .section {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  color: #eee;
+  font-size: 18pt;
+  margin: 10px 0 0 0;
+}
+
+.settingsContainer .section:last-of-type {
+  margin: 10px 0;
+} */

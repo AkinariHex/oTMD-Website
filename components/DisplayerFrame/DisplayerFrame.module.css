@@ -1,0 +1,67 @@
+.frame {
+  width: 80%;
+  max-width: 272px;
+  height: 60px;
+  outline: 2px solid #ddd;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 20px 50px auto 50px 20px;
+  grid-template-areas: 'lpropic lname score rname rpropic';
+  grid-auto-rows: 100%;
+  align-items: center;
+  gap: 0 4px;
+  padding: 0 10px;
+  user-select: none;
+}
+
+.framePropic {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50vh;
+  background-color: #ccc;
+  grid-area: propic;
+  grid-row: 1;
+}
+
+.framePropic.lside {
+  grid-area: lpropic;
+}
+
+.framePropic.rside {
+  grid-area: rpropic;
+}
+
+.frameName {
+  width: 100%;
+  height: 12px;
+  border-radius: 50vh;
+  background-color: #999;
+}
+
+.frameName.lside {
+  grid-area: lname;
+}
+
+.frameName.rside {
+  grid-area: rname;
+}
+
+.frameScore {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0 4px;
+  grid-area: score;
+  font-size: 10pt;
+  font-weight: 500;
+  color: #eee;
+}
+
+.framePoint {
+  width: 40px;
+  height: 12px;
+  background-color: #c2c2c2;
+  border-radius: 50vh;
+}
