@@ -81,7 +81,6 @@ export const authOptions = {
 
   callbacks: {
     async session({ session, user, token }) {
-      // Get data from OSU API
       const userData = await fetch(`https://osu.ppy.sh/api/v2/me`, {
         headers: {
           Authorization: `Bearer ${token?.access_token}`,
@@ -91,6 +90,7 @@ export const authOptions = {
       if (userData.authentication === 'basic') return {};
 
       userData.access_token = token?.access_token;
+      userData.refresh_token = token?.refresh_token;
 
       return userData;
     },
@@ -98,13 +98,15 @@ export const authOptions = {
       if (account?.access_token) {
         token.access_token = account.access_token;
         token.refresh_token = account.refresh_token;
-
-        // Write user in database
         checkUserDBsupabase(profile);
       }
 
       return token;
     },
+  },
+
+  pages: {
+    callback: '/api/auth/app-callback',
   },
 };
 
