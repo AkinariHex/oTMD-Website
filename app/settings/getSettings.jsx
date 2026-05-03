@@ -1,9 +1,9 @@
 'use server';
 
-import supabase from '@/config/supabaseClient';
+import { supabaseAdmin } from '@/config/supabaseClient';
 export async function getSettings(sessionID) {
   'use server';
-  var { data, error } = await supabase
+  var { data, error } = await supabaseAdmin
     .from('users')
     .select('UUID,api_key,sendMatchesDiscord,discordChannelsMatch')
     .eq('ID', sessionID);

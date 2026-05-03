@@ -34,7 +34,7 @@ export default function NavbarProfileDropdown({
     () => {
       if (isDropdownOpen) setIsDropdownOpen(false);
     },
-    linksRef
+    linksRef,
   );
 
   return (
@@ -45,21 +45,21 @@ export default function NavbarProfileDropdown({
       transition={{ duration: 0.2 }}
       ref={dropdownRef}
     >
-      <Link href="/profile" ref={linksRef}>
+      {/* <Link href="/profile" ref={linksRef}>
         <FontAwesomeIcon icon={faUser} size="sm" color="#d9e3f0" />
         Profile
-      </Link>
-      <Link href="/tournaments/add" ref={linksRef}>
+      </Link> */}
+      {/* <Link href="/tournaments/add" ref={linksRef}>
         <FontAwesomeIcon icon={faPlus} size="sm" color="#d9e3f0" />
         Add Tournament
-      </Link>
+      </Link> */}
       <Link href="/settings" ref={linksRef}>
         <FontAwesomeIcon icon={faGear} size="sm" color="#d9e3f0" />
         Settings
       </Link>
       <div
         onClick={() => {
-          signOut(), setIsDropdownOpen(false);
+          (signOut(), setIsDropdownOpen(false));
         }}
       >
         <FontAwesomeIcon icon={faRightFromBracket} size="sm" color="#F47373" />

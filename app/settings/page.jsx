@@ -1,13 +1,13 @@
 import ApikeySettings from '@/components/Settings/ApikeySettings/ApikeySettings';
 import WebhookSettings from '@/components/Settings/WebhookSettings/WebhookSettings';
-import supabase from '@/config/supabaseClient';
+import { supabaseAdmin } from '@/config/supabaseClient';
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import styles from './settings.module.css';
 
 async function getSettings(sessionID) {
-  var { data, error } = await supabase
+  var { data, error } = await supabaseAdmin
     .from('users')
     .select('UUID,api_key,sendMatchesDiscord,discordChannelsMatch')
     .eq('ID', sessionID);

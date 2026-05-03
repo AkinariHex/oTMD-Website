@@ -1,9 +1,9 @@
-import supabase from '@/config/supabaseClient';
+import { supabaseAdmin } from '@/config/supabaseClient';
 import NextAuth from 'next-auth';
 import { v4 as uuidv4 } from 'uuid';
 
 const postUserDBsupabase = async (profile) => {
-  const { data, error } = await supabase.from('users').insert([
+  const { data, error } = await supabaseAdmin.from('users').insert([
     {
       ID: profile.id,
       username: profile.username,
@@ -25,10 +25,10 @@ const postUserDBsupabase = async (profile) => {
 };
 
 const checkUserDBsupabase = async (profile) => {
-  const player = await supabase.from('users').select('*').eq('ID', profile.id);
+  const player = await supabaseAdmin.from('users').select('*').eq('ID', profile.id);
 
   if (player.data && player.data.length > 0) {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('users')
       .update({
         username: profile.username,

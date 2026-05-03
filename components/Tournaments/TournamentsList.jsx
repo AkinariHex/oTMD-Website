@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import TournamentItem from './TournamentItem';
 
 function TournamentsList({ setSelected, tournaments }) {
+  if (!tournaments || !Array.isArray(tournaments) || tournaments.length === 0) {
+    return <div>No tournaments found</div>;
+  }
+
   const boxVariant = {
     hidden: {
       opacity: 1,

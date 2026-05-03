@@ -1,5 +1,5 @@
 import TournamentContent from '@/components/Tournaments/TournamentContent';
-import supabase from '@/config/supabaseClient';
+import { supabaseAdmin } from '@/config/supabaseClient';
 
 function updateTournamentStatus(tournaments) {
   let todayDate = new Date();
@@ -53,7 +53,7 @@ function updateTournamentStatus(tournaments) {
 }
 
 async function getTournaments() {
-  var { data, error } = await supabase
+  var { data, error } = await supabaseAdmin
     .from(process.env.NEXT_PUBLIC_DB_TOURNAMENTS)
     .select(
       'acronym, UUID, name, forumID, website, pickem, isActive, stages, multipliers, tourney_start, tourney_end, banner, host, description'
@@ -73,7 +73,7 @@ async function getTournaments() {
 
   data.length = 15;
 
-  data = await updateTournamentStatus(data);
+  data = updateTournamentStatus(data);
 
   return data;
 }

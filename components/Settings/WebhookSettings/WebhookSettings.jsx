@@ -61,24 +61,24 @@ function WebhookSettings({ sendMatchesDiscord, discordChannelsMatch }) {
       </div>
       <div className={styles.mintitle}>Discord Channels</div>
       <div className={styles.list}>
-        {JSON.parse(discordChannelsMatch).map((channel, index) => {
-          return (
-            <div
-              className={styles.item}
-              key={index}
-              onClick={() =>
-                window.open(
-                  `discord://discord.com/channels/${channel.ServerID}/${channel.ChannelID}`,
-                  '_blank'
-                )
-              }
-            >
-              <div className={styles.server}>{channel.ServerName}</div>
-              <span>|</span>
-              <div className={styles.channel}>#{channel.ChannelName}</div>
-            </div>
-          );
-        })}
+        {discordChannelsMatch
+          ? JSON.parse(discordChannelsMatch).map((channel, index) => (
+              <div
+                className={styles.item}
+                key={index}
+                onClick={() =>
+                  window.open(
+                    `discord://discord.com/channels/${channel.ServerID}/${channel.ChannelID}`,
+                    '_blank'
+                  )
+                }
+              >
+                <div className={styles.server}>{channel.ServerName}</div>
+                <span>|</span>
+                <div className={styles.channel}>#{channel.ChannelName}</div>
+              </div>
+            ))
+          : null}
       </div>
     </div>
   );
