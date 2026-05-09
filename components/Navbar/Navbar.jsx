@@ -96,7 +96,7 @@ function Navbar() {
           />
         </div>
       ) : (
-        <button className={styles.login} onClick={() => signIn('osu')}>
+        <button className={styles.login} onClick={() => signIn('osu', { callbackUrl: '/' })}>
           <span>Login with osu!</span>
           <Image src={osulogo} alt="osu! logo" width={25} height={25} />
         </button>

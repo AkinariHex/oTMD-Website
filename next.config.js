@@ -6,8 +6,8 @@ const withMDX = require('@next/mdx')();
 
 const withPWA = withPWAInit({
   dest: 'public',
-  // Solution: https://github.com/shadowwalker/next-pwa/issues/424#issuecomment-1399683017
   buildExcludes: ['app-build-manifest.json'],
+  disable: process.env.NODE_ENV === 'development',
 });
 
 /* const generateAppDirEntry = (entry) => {

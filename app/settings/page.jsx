@@ -3,7 +3,7 @@ import WebhookSettings from '@/components/Settings/WebhookSettings/WebhookSettin
 import { supabaseAdmin } from '@/config/supabaseClient';
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import styles from './settings.module.css';
 
 async function getSettings(sessionID) {

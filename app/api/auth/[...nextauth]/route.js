@@ -17,10 +17,7 @@ const postUserDBsupabase = async (profile) => {
         dateJoin: Math.floor(new Date().getTime() / 1000.0),
       },
     ]);
-
-    if (error) {
-      console.log('Post user error:', error);
-    }
+    if (error) console.log('Post user error:', error);
   } catch (e) {
     console.log('Post user exception:', e);
   }
@@ -33,14 +30,9 @@ const checkUserDBsupabase = async (profile) => {
     if (player.data && player.data.length > 0) {
       const { error } = await supabaseAdmin
         .from('users')
-        .update({
-          username: profile.username,
-        })
+        .update({ username: profile.username })
         .eq('ID', profile.id);
-
-      if (error) {
-        console.log('Update user error:', error);
-      }
+      if (error) console.log('Update user error:', error);
       return;
     }
     if (player.data && player.data.length === 0) {
@@ -60,9 +52,7 @@ export const authOptions = {
       token: 'https://osu.ppy.sh/oauth/token',
       authorization: {
         url: 'https://osu.ppy.sh/oauth/authorize',
-        params: {
-          scope: 'identify public',
-        },
+        params: { scope: 'identify public' },
       },
       userinfo: 'https://osu.ppy.sh/api/v2/me',
       profile(profile) {
@@ -84,45 +74,40 @@ export const authOptions = {
 
   callbacks: {
     async session({ session, token }) {
-      if (!token?.access_token) {
-        return session;
+      if (token?.access_token) {
+        session.id = token.id;
+        session.username = token.username;
+        session.avatar_url = token.avatar_url;
+        session.access_token = token.access_token;
+        session.refresh_token = token.refresh_token;
       }
-
-      const userData = await fetch(`https://osu.ppy.sh/api/v2/me`, {
-        headers: {
-          Authorization: `Bearer ${token.access_token}`,
-        },
-      }).then((res) => res.json());
-
-      if (userData.id) {
-        return {
-          ...session,
-          id: userData.id,
-          username: userData.username,
-          avatar_url: userData.avatar_url,
-          access_token: token.access_token,
-          refresh_token: token.refresh_token,
-        };
-      }
-
       return session;
     },
     async jwt({ token, account, profile }) {
       if (account?.access_token) {
         token.access_token = account.access_token;
         token.refresh_token = account.refresh_token;
-        if (profile?.id) {
-          checkUserDBsupabase(profile);
-        }
       }
-
+      if (profile?.id) {
+        token.id = profile.id;
+        token.username = profile.username;
+        token.avatar_url = profile.avatar_url;
+        checkUserDBsupabase(profile);
+      }
       return token;
+    },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith('otmd://')) return url;
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      if (url.startsWith(baseUrl)) return url;
+      return baseUrl;
     },
   },
 
   pages: {
-    signin: '/',
+    signIn: '/',
   },
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
