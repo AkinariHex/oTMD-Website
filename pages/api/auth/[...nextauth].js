@@ -80,25 +80,37 @@ export const authOptions = {
   },
 
   callbacks: {
-    async session({ session, user, token }) {
+    async session({ session, token }) {
+      if (!token?.access_token) {
+        return session;
+      }
+
       const userData = await fetch(`https://osu.ppy.sh/api/v2/me`, {
         headers: {
-          Authorization: `Bearer ${token?.access_token}`,
+          Authorization: `Bearer ${token.access_token}`,
         },
       }).then((res) => res.json());
 
-      if (userData.authentication === 'basic') return {};
+      if (userData.id) {
+        return {
+          ...session,
+          id: userData.id,
+          username: userData.username,
+          avatar_url: userData.avatar_url,
+          access_token: token.access_token,
+          refresh_token: token.refresh_token,
+        };
+      }
 
-      userData.access_token = token?.access_token;
-      userData.refresh_token = token?.refresh_token;
-
-      return userData;
+      return session;
     },
     async jwt({ token, account, profile }) {
       if (account?.access_token) {
         token.access_token = account.access_token;
         token.refresh_token = account.refresh_token;
-        checkUserDBsupabase(profile);
+        if (profile?.id) {
+          checkUserDBsupabase(profile);
+        }
       }
 
       return token;
@@ -106,7 +118,7 @@ export const authOptions = {
   },
 
   pages: {
-    callback: '/api/auth/app-callback',
+    signin: '/',
   },
 };
 
