@@ -3,48 +3,51 @@ import NextAuth from 'next-auth';
 import { v4 as uuidv4 } from 'uuid';
 
 const postUserDBsupabase = async (profile) => {
-  const { data, error } = await supabaseAdmin.from('users').insert([
-    {
-      ID: profile.id,
-      username: profile.username,
-      UUID: uuidv4(),
-      permissions: 'User',
-      discord: profile.discord,
-      twitter: profile.twitter,
-      country: JSON.stringify(profile.country),
-      discordChannelsMatch: '[]',
-      dateJoin: Math.floor(new Date().getTime() / 1000.0),
-    },
-  ]);
+  try {
+    const { error } = await supabaseAdmin.from('users').insert([
+      {
+        ID: profile.id,
+        username: profile.username || 'Unknown',
+        UUID: uuidv4(),
+        permissions: 'User',
+        discord: profile.discord || null,
+        twitter: profile.twitter || null,
+        country: profile.country ? JSON.stringify(profile.country) : null,
+        discordChannelsMatch: '[]',
+        dateJoin: Math.floor(new Date().getTime() / 1000.0),
+      },
+    ]);
 
-  if (error) {
-    console.log(error);
-    return;
+    if (error) {
+      console.log('Post user error:', error);
+    }
+  } catch (e) {
+    console.log('Post user exception:', e);
   }
-  return;
 };
 
 const checkUserDBsupabase = async (profile) => {
-  const player = await supabaseAdmin.from('users').select('*').eq('ID', profile.id);
+  try {
+    const player = await supabaseAdmin.from('users').select('*').eq('ID', profile.id);
 
-  if (player.data && player.data.length > 0) {
-    const { data, error } = await supabaseAdmin
-      .from('users')
-      .update({
-        username: profile.username,
-        UUID: player.data.UUID ?? uuidv4(),
-        country: JSON.stringify(profile.country),
-      })
-      .eq('ID', profile.id);
+    if (player.data && player.data.length > 0) {
+      const { error } = await supabaseAdmin
+        .from('users')
+        .update({
+          username: profile.username,
+        })
+        .eq('ID', profile.id);
 
-    if (error) {
-      console.log(error);
+      if (error) {
+        console.log('Update user error:', error);
+      }
       return;
     }
-    return;
-  }
-  if (!player.data.length) {
-    return postUserDBsupabase(profile);
+    if (player.data && player.data.length === 0) {
+      return postUserDBsupabase(profile);
+    }
+  } catch (e) {
+    console.log('Check user error:', e);
   }
 };
 
@@ -64,10 +67,10 @@ export const authOptions = {
       userinfo: 'https://osu.ppy.sh/api/v2/me',
       profile(profile) {
         return {
-          id: profile.id,
-          name: profile.username,
+          id: String(profile.id),
+          name: profile.username || profile.name,
           image: profile.avatar_url,
-          email: null,
+          email: profile.email || null,
         };
       },
       clientId: process.env.OSU_CLIENT_ID,
