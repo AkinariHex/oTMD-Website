@@ -1,64 +1,34 @@
-import { NextResponse } from 'next/server';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { supabaseAdmin } from '@/config/supabaseClient';
-import generateApiKey from 'generate-api-key';
+import { randomBytes } from 'crypto';
+import { getServerSession } from 'next-auth';
+import { NextResponse } from 'next/server';
 
-const randomString = (length = 32) => {
-  let chars =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:<>?,./';
-
-  let str = '';
-  for (let i = 0; i < length; i++) {
-    str += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-
-  return str;
-};
-
-export async function POST(request) {
+// The user always comes from the session cookie (SameSite=Lax), never from the request body.
+async function setOwnApiKey(apiKey) {
   try {
-    const { userId, uuid } = await request.json();
+    const session = await getServerSession(authOptions);
 
-    let newAPI = generateApiKey({
-      method: 'uuidv5',
-      name: randomString(),
-      namespace: uuid,
-      prefix: userId,
-    });
-
-    const { data, error } = await supabaseAdmin
-      .from('users')
-      .update({
-        api_key: newAPI,
-      })
-      .eq('ID', userId);
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if (!session?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    return NextResponse.json({ success: true, api_key: newAPI });
-  } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    const { error } = await supabaseAdmin
+      .from('users')
+      .update({ api_key: apiKey })
+      .eq('ID', session.id);
+
+    if (error) throw error;
+
+    return NextResponse.json(
+      apiKey ? { success: true, api_key: apiKey } : { success: true },
+      { headers: { 'Cache-Control': 'no-store' } }
+    );
+  } catch {
+    console.error('API key update failed');
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
-export async function DELETE(request) {
-  try {
-    const { userId } = await request.json();
-
-    const { data, error } = await supabaseAdmin
-      .from('users')
-      .update({
-        api_key: null,
-      })
-      .eq('ID', userId);
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
-  }
-}
+export const POST = () => setOwnApiKey(randomBytes(32).toString('hex'));
+export const DELETE = () => setOwnApiKey(null);

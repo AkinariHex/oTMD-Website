@@ -20,7 +20,7 @@ export async function GET(request, { params }) {
         return NextResponse.json({ error: 'Room not found' }, { status: 404 });
       }
       console.error('Error fetching room:', error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 
     return NextResponse.json({ room: data });
@@ -55,11 +55,12 @@ export async function PUT(request, { params }) {
       .from('ranked_rooms')
       .update(updateData)
       .eq('id', params.id)
+      .eq('created_by', auth.user.ID)
       .select();
 
     if (error) {
       console.error('Error updating room:', error);
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid room data' }, { status: 400 });
     }
 
     if (!data || data.length === 0) {
@@ -80,14 +81,20 @@ export async function DELETE(request, { params }) {
   }
 
   try {
-    const { error } = await supabaseAdmin
+    const { data, error } = await supabaseAdmin
       .from('ranked_rooms')
       .delete()
-      .eq('id', params.id);
+      .eq('id', params.id)
+      .eq('created_by', auth.user.ID)
+      .select('id');
 
     if (error) {
       console.error('Error deleting room:', error);
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid room data' }, { status: 400 });
+    }
+
+    if (!data || data.length === 0) {
+      return NextResponse.json({ error: 'Room not found' }, { status: 404 });
     }
 
     return NextResponse.json({ message: 'Room deleted successfully' });

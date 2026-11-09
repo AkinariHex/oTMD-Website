@@ -78,15 +78,12 @@ export const authOptions = {
         session.id = token.id;
         session.username = token.username;
         session.avatar_url = token.avatar_url;
-        session.access_token = token.access_token;
-        session.refresh_token = token.refresh_token;
       }
       return session;
     },
     async jwt({ token, account, profile }) {
       if (account?.access_token) {
         token.access_token = account.access_token;
-        token.refresh_token = account.refresh_token;
       }
       if (profile?.id) {
         token.id = profile.id;
@@ -97,10 +94,8 @@ export const authOptions = {
       return token;
     },
     async redirect({ url, baseUrl }) {
-      if (url.startsWith('otmd://')) return url;
       if (url.startsWith('/')) return `${baseUrl}${url}`;
-      if (url.startsWith(baseUrl)) return url;
-      return baseUrl;
+      return URL.canParse(url) && new URL(url).origin === baseUrl ? url : baseUrl;
     },
   },
 

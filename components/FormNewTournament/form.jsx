@@ -101,17 +101,8 @@ async function sendToDiscord(tournament) {
   return;
 }
 
-async function getUserData(id, token) {
-  const headers = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    Authorization: `Bearer ${token}`,
-  };
-
-  let request = await fetch(`/api/osu/users/${id}`, {
-    method: 'GET',
-    headers,
-  });
+async function getUserData(id) {
+  let request = await fetch(`/api/osu/users/${encodeURIComponent(id)}`);
   request = await request.json();
 
   const data = {
@@ -149,7 +140,7 @@ async function postFormData(data) {
     })
   );
 
-  data.host = data.host ? await getUserData(data?.host, data.token) : null;
+  data.host = data.host ? await getUserData(data?.host) : null;
 
   data.forumID = (await data?.forumID) === '' ? null : data.forumID;
 
@@ -188,7 +179,6 @@ export default function Form({ session }) {
       mod_HT: '1.00',
       moderator: session.id,
       moderatorName: session.username,
-      token: session.access_token,
     },
   });
 

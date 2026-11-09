@@ -1,6 +1,5 @@
 'use client';
 
-import generateApiKey from 'generate-api-key';
 import { Copy, Eye, EyeSlash } from 'iconsax-react';
 import { useState } from 'react';
 import { Tooltip } from 'react-tippy';

@@ -50,11 +50,11 @@ export async function POST(request) {
 
   try {
     const body = await request.json();
-    const { room_id, ended_at, players, scores, winner_id, created_by, total_rounds, best_of, match_type, ruleset_id } = body;
+    const { room_id, ended_at, players, scores, winner_id, total_rounds, best_of, match_type, ruleset_id } = body;
 
-    if (!room_id || !ended_at || !players || !scores || !created_by || !total_rounds) {
+    if (!room_id || !ended_at || !players || !scores || !total_rounds) {
       return NextResponse.json(
-        { error: 'Missing required fields: room_id, ended_at, players, scores, created_by, total_rounds' },
+        { error: 'Missing required fields: room_id, ended_at, players, scores, total_rounds' },
         { status: 400 }
       );
     }
@@ -67,7 +67,7 @@ export async function POST(request) {
         players,
         scores,
         winner_id: winner_id || null,
-        created_by,
+        created_by: auth.user.ID,
         total_rounds,
         best_of: best_of || null,
         match_type: match_type || 'ranked_play',

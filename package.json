@@ -24,7 +24,6 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.25",
     "framer-motion": "^11.15.0",
-    "generate-api-key": "^1.0.2",
     "iconsax-react": "^0.0.8",
     "jotai": "^2.10.4",
     "marked": "^15.0.4",
