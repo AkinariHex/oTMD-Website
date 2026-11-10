@@ -1,6 +1,6 @@
 import { supabaseAdmin } from '@/config/supabaseClient';
 import { validateApiKey } from '@/lib/auth';
-import { summarizeStats, withBanners } from '@/lib/matchStats';
+import { summarizeStats } from '@/lib/matchStats';
 import { clientIp, consumeRateLimit } from '@/lib/osuOAuthBroker';
 import { NextResponse } from 'next/server';
 
@@ -39,13 +39,7 @@ export async function GET(request) {
 
     if (matches.error) throw matches.error;
 
-    const stats = summarizeStats(matches.data, ownerId);
-    const acronyms = [...new Set(stats.recentMatches.map((match) => match.tournament.acronym).filter(Boolean))];
-    if (acronyms.length === 0) return NextResponse.json(stats, { headers: NO_STORE });
-
-    // A banner is decoration: failing to read one must not take the stats down with it.
-    const tournaments = await supabaseAdmin.from('tournaments').select('acronym,name,banner').in('acronym', acronyms);
-    return NextResponse.json(withBanners(stats, tournaments.error ? [] : tournaments.data), { headers: NO_STORE });
+    return NextResponse.json(summarizeStats(matches.data, ownerId), { headers: NO_STORE });
   } catch {
     console.error('Match stats failed');
     return NextResponse.json({ error: 'Internal server error' }, { status: 500, headers: NO_STORE });
