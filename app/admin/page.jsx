@@ -22,10 +22,12 @@ export default async function Admin() {
   ]);
 
   return (
-    <div className={styles.settingsContainer}>
-      <div className={styles.title}>Administration</div>
-      <ProposalWebhook initialWebhook={webhook} />
-      <Donations supporters={supporters.data ?? []} donations={donations.data ?? []} />
-    </div>
+    <main className={styles.pageContainer}>
+      <div className={styles.settingsContainer}>
+        <div className={styles.title}>Administration</div>
+        <ProposalWebhook initialWebhook={webhook} />
+        <Donations supporters={supporters.data ?? []} donations={donations.data ?? []} />
+      </div>
+    </main>
   );
 }

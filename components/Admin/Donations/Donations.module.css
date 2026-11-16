@@ -4,6 +4,11 @@
   gap: 10px;
 }
 
+.form > input {
+  min-width: 0;
+  width: 100%;
+}
+
 .form > :last-child {
   grid-column: 1 / -1;
 }
