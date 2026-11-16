@@ -91,6 +91,7 @@ function Navbar() {
           />
           <NavbarProfileDropdown
             signOut={signOut}
+            isAdmin={session?.isAdmin}
             isDropdownOpen={isDropdownOpen}
             setIsDropdownOpen={setIsDropdownOpen}
           />

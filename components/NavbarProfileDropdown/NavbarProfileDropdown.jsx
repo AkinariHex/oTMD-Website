@@ -3,6 +3,7 @@ import {
   faGear,
   faPlus,
   faRightFromBracket,
+  faUserShield,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +15,7 @@ import styles from './NavbarProfileDropdown.module.css';
 
 export default function NavbarProfileDropdown({
   signOut,
+  isAdmin,
   isDropdownOpen,
   setIsDropdownOpen,
 }) {
@@ -57,6 +59,12 @@ export default function NavbarProfileDropdown({
         <FontAwesomeIcon icon={faGear} size="sm" color="#d9e3f0" />
         Settings
       </Link>
+      {isAdmin && (
+        <Link href="/admin" ref={linksRef}>
+          <FontAwesomeIcon icon={faUserShield} size="sm" color="#d9e3f0" />
+          Admin
+        </Link>
+      )}
       <div
         onClick={() => {
           (signOut(), setIsDropdownOpen(false));

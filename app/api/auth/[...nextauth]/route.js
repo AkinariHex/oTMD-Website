@@ -1,4 +1,5 @@
 import { supabaseAdmin } from '@/config/supabaseClient';
+import { isAdmin } from '@/lib/admin';
 import NextAuth from 'next-auth';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -78,6 +79,8 @@ export const authOptions = {
         session.id = token.id;
         session.username = token.username;
         session.avatar_url = token.avatar_url;
+        // Only shows the admin link; /admin and its API still check ADMIN_OSU_IDS on the server.
+        session.isAdmin = isAdmin(token.id);
       }
       return session;
     },

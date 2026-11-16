@@ -1,0 +1,44 @@
+.form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr;
+  gap: 10px;
+}
+
+.form > :last-child {
+  grid-column: 1 / -1;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 7em 8em 6em 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 34px;
+  font-size: 11pt;
+}
+
+.link {
+  color: #eee;
+}
+
+.number {
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: #bbb;
+}
+
+.note {
+  overflow: hidden;
+  color: #bbb;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .form,
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
